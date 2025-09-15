@@ -1,0 +1,103 @@
+<div class="upload-dialog">
+  <div class="dialog-header">
+    <h2 mat-dialog-title>
+      <mat-icon>cloud_upload</mat-icon>
+      Enviar Material
+    </h2>
+    <p mat-dialog-subtitle>
+      Faça upload de materiais de estudo para seus alunos
+    </p>
+  </div>
+
+  <div mat-dialog-content>
+      <form [formGroup]="uploadForm" (ngSubmit)="onSubmit()" class="upload-form">
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Título do Material</mat-label>
+          <input 
+            matInput 
+            formControlName="title"
+            placeholder="Ex: Aula 1 - Introdução ao JavaScript"
+            maxlength="200">
+          <mat-icon matSuffix>title</mat-icon>
+          <mat-error *ngIf="title?.hasError('required')">
+            Título é obrigatório
+          </mat-error>
+          <mat-error *ngIf="title?.hasError('maxlength')">
+            Título deve ter no máximo 200 caracteres
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Descrição</mat-label>
+          <textarea 
+            matInput 
+            formControlName="description"
+            placeholder="Descreva o conteúdo do material..."
+            rows="3"
+            maxlength="1000">
+          </textarea>
+          <mat-icon matSuffix>description</mat-icon>
+          <mat-error *ngIf="description?.hasError('maxlength')">
+            Descrição deve ter no máximo 1000 caracteres
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Link (opcional)</mat-label>
+          <input 
+            matInput 
+            formControlName="link"
+            placeholder="https://exemplo.com"
+            type="url"
+            maxlength="500">
+          <mat-icon matSuffix>link</mat-icon>
+          <mat-error *ngIf="link?.hasError('maxlength')">
+            Link deve ter no máximo 500 caracteres
+          </mat-error>
+        </mat-form-field>
+
+        <div class="file-upload-section">
+          <label for="fileInput" class="file-upload-label">
+            <mat-icon>attach_file</mat-icon>
+            <span *ngIf="!selectedFile">Selecionar Arquivo</span>
+            <span *ngIf="selectedFile">{{ selectedFile.name }}</span>
+          </label>
+          <input 
+            id="fileInput"
+            type="file" 
+            (change)="onFileSelected($event)"
+            accept=".pdf,.doc,.docx,.txt,.jpg,.jpeg,.png,.gif"
+            style="display: none;">
+          
+          <div class="file-info" *ngIf="selectedFile">
+            <p class="file-details">
+              <mat-icon>insert_drive_file</mat-icon>
+              {{ selectedFile.name }} ({{ (selectedFile.size / 1024 / 1024).toFixed(2) }} MB)
+            </p>
+          </div>
+        </div>
+
+      </form>
+  </div>
+
+  <div mat-dialog-actions class="dialog-actions">
+    <button 
+      mat-button 
+      type="button"
+      (click)="cancel()">
+      Cancelar
+    </button>
+    <button 
+      mat-raised-button 
+      color="primary" 
+      type="submit"
+      [disabled]="uploadForm.invalid || !selectedFile || isLoading"
+      (click)="onSubmit()"
+      class="upload-button">
+      <mat-spinner *ngIf="isLoading" diameter="20" class="button-spinner"></mat-spinner>
+      <mat-icon *ngIf="!isLoading">cloud_upload</mat-icon>
+      <span *ngIf="!isLoading">Enviar Material</span>
+      <span *ngIf="isLoading">Enviando...</span>
+    </button>
+  </div>
+</div>

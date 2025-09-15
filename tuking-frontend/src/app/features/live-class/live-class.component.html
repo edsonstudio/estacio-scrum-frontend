@@ -1,0 +1,203 @@
+<div class="live-class-container">
+  <!-- Aviso de Compatibilidade -->
+  <mat-card *ngIf="!isWebRTCSupported" class="compatibility-warning">
+    <mat-card-header>
+      <mat-card-title>
+        <mat-icon color="warn">warning</mat-icon>
+        WebRTC Não Suportado
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <p>Seu navegador não suporta vídeo chamadas. Para usar esta funcionalidade:</p>
+      <ul>
+        <li>Use Chrome, Firefox ou Edge atualizados</li>
+        <li>Certifique-se de que está em uma conexão segura (HTTPS)</li>
+        <li>Verifique se a câmera e microfone estão disponíveis</li>
+      </ul>
+      <p><strong>Alternativa:</strong> Você pode usar outras ferramentas de vídeo chamada como Zoom, Google Meet ou Microsoft Teams.</p>
+    </mat-card-content>
+  </mat-card>
+
+  <!-- Header da Aula -->
+  <mat-card class="class-header">
+    <mat-card-header>
+      <mat-card-title>
+        <mat-icon>videocam</mat-icon>
+        <span *ngIf="isProfessor">Minha Aula ao Vivo</span>
+        <span *ngIf="isStudent">Aula ao Vivo</span>
+      </mat-card-title>
+      <mat-card-subtitle>
+        <span *ngIf="isProfessor">Compartilhe sua tela e ensine seus alunos</span>
+        <span *ngIf="isStudent">Acompanhe a aula em tempo real</span>
+      </mat-card-subtitle>
+    </mat-card-header>
+  </mat-card>
+
+  <!-- Área de Vídeo -->
+  <div class="video-container">
+    <!-- Vídeo Remoto (Professor para Aluno / Aluno para Professor) -->
+    <div class="remote-video-section">
+      <mat-card class="video-card main-video">
+        <mat-card-header>
+          <mat-card-title>
+            <mat-icon>person</mat-icon>
+            <span *ngIf="isProfessor">Aluno</span>
+            <span *ngIf="isStudent">Professor</span>
+          </mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <video 
+            #remoteVideo 
+            autoplay 
+            playsinline 
+            class="remote-video"
+            [class.hidden]="!remoteStream">
+          </video>
+          <div *ngIf="!remoteStream" class="no-video-placeholder">
+            <mat-icon>person_off</mat-icon>
+            <p>Aguardando conexão...</p>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+    <!-- Vídeo Local (Sua câmera) -->
+    <div class="local-video-section">
+      <mat-card class="video-card local-video">
+        <mat-card-header>
+          <mat-card-title>
+            <mat-icon>videocam</mat-icon>
+            Você
+          </mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <video 
+            #localVideo 
+            autoplay 
+            playsinline 
+            muted 
+            class="local-video-element"
+            [class.hidden]="!localStream">
+          </video>
+          <div *ngIf="!localStream" class="no-video-placeholder">
+            <mat-icon>videocam_off</mat-icon>
+            <p>Carregando câmera...</p>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+
+  <!-- Controles da Aula -->
+  <mat-card class="controls-card">
+    <mat-card-content>
+      <div class="controls-container">
+        <!-- Controles para Professor -->
+        <div *ngIf="isProfessor" class="professor-controls">
+          <button 
+            mat-raised-button 
+            color="primary"
+            (click)="startClass()"
+            [disabled]="!localStream"
+            class="control-button">
+            <mat-icon>play_arrow</mat-icon>
+            Iniciar Aula
+          </button>
+
+          <button 
+            mat-raised-button 
+            color="accent"
+            (click)="startScreenShare()"
+            [disabled]="!localStream || isSharingScreen"
+            class="control-button">
+            <mat-icon>screen_share</mat-icon>
+            Compartilhar Tela
+          </button>
+
+          <button 
+            mat-raised-button 
+            color="warn"
+            (click)="stopScreenShare()"
+            [disabled]="!isSharingScreen"
+            class="control-button">
+            <mat-icon>stop_screen_share</mat-icon>
+            Parar Compartilhamento
+          </button>
+        </div>
+
+        <!-- Controles para Aluno -->
+        <div *ngIf="isStudent" class="student-controls">
+          <button 
+            mat-raised-button 
+            color="primary"
+            (click)="joinClass()"
+            [disabled]="!localStream"
+            class="control-button">
+            <mat-icon>login</mat-icon>
+            Entrar na Aula
+          </button>
+        </div>
+
+        <!-- Controles Comuns -->
+        <div class="common-controls">
+          <button 
+            mat-icon-button 
+            [color]="isMuted ? 'warn' : 'primary'"
+            (click)="toggleMute()"
+            [disabled]="!localStream"
+            class="control-icon-button"
+            matTooltip="{{ isMuted ? 'Ativar Microfone' : 'Desativar Microfone' }}">
+            <mat-icon>{{ isMuted ? 'mic_off' : 'mic' }}</mat-icon>
+          </button>
+
+          <button 
+            mat-icon-button 
+            [color]="isVideoOn ? 'primary' : 'warn'"
+            (click)="toggleVideo()"
+            [disabled]="!localStream"
+            class="control-icon-button"
+            matTooltip="{{ isVideoOn ? 'Desativar Câmera' : 'Ativar Câmera' }}">
+            <mat-icon>{{ isVideoOn ? 'videocam' : 'videocam_off' }}</mat-icon>
+          </button>
+
+          <button 
+            mat-icon-button 
+            color="warn"
+            (click)="leaveClass()"
+            class="control-icon-button"
+            matTooltip="Sair da Aula">
+            <mat-icon>call_end</mat-icon>
+          </button>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <!-- Status da Conexão -->
+  <mat-card class="status-card">
+    <mat-card-content>
+      <div class="status-container">
+        <div class="status-item">
+          <mat-icon [color]="localStream ? 'primary' : 'warn'">
+            {{ localStream ? 'check_circle' : 'error' }}
+          </mat-icon>
+          <span>Câmera: {{ localStream ? 'Ativa' : 'Inativa' }}</span>
+        </div>
+        
+        <div class="status-item">
+          <mat-icon [color]="isConnected ? 'primary' : 'warn'">
+            {{ isConnected ? 'wifi' : 'wifi_off' }}
+          </mat-icon>
+          <span>Conexão: {{ isConnected ? 'Conectado' : 'Desconectado' }}</span>
+        </div>
+
+        <div *ngIf="isProfessor" class="status-item">
+          <mat-icon [color]="isSharingScreen ? 'accent' : 'primary'">
+            {{ isSharingScreen ? 'screen_share' : 'screen_share' }}
+          </mat-icon>
+          <span>Tela: {{ isSharingScreen ? 'Compartilhando' : 'Não compartilhando' }}</span>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

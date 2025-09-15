@@ -1,0 +1,77 @@
+<div class="dashboard-container">
+  <!-- Dashboard do Professor -->
+  <div *ngIf="currentUser?.role === 'Professor'" class="professor-dashboard">
+    <mat-card class="welcome-card professor-card">
+      <mat-card-header>
+        <mat-card-title>
+          <mat-icon>school</mat-icon>
+          Dashboard do Professor
+        </mat-card-title>
+        <mat-card-subtitle>Gerencie suas aulas e materiais</mat-card-subtitle>
+      </mat-card-header>
+
+      <mat-card-content>
+        <div class="user-info" *ngIf="currentUser">
+          <p><strong>Professor:</strong> {{ currentUser.fullName }}</p>
+          <p><strong>Email:</strong> {{ currentUser.email }}</p>
+        </div>
+        
+        <div class="quick-actions">
+          <h3>Ações Rápidas</h3>
+          <div class="action-buttons">
+            <button mat-raised-button color="primary" (click)="startLiveClass()">
+              <mat-icon>videocam</mat-icon>
+              Iniciar Aula ao Vivo
+            </button>
+            <button mat-raised-button color="accent" (click)="viewStudents()">
+              <mat-icon>people</mat-icon>
+              Ver Alunos
+            </button>
+            <button mat-raised-button color="warn" (click)="logout()">
+              <mat-icon>logout</mat-icon>
+              Sair
+            </button>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <!-- Dashboard do Aluno -->
+  <div *ngIf="currentUser?.role === 'Aluno'" class="student-dashboard">
+    <mat-card class="welcome-card student-card">
+      <mat-card-header>
+        <mat-card-title>
+          <mat-icon>person</mat-icon>
+          Dashboard do Aluno
+        </mat-card-title>
+        <mat-card-subtitle>Acesse suas aulas e materiais</mat-card-subtitle>
+      </mat-card-header>
+
+      <mat-card-content>
+        <div class="user-info" *ngIf="currentUser">
+          <p><strong>Aluno:</strong> {{ currentUser.fullName }}</p>
+          <p><strong>Email:</strong> {{ currentUser.email }}</p>
+        </div>
+        
+        <div class="quick-actions">
+          <h3>Ações Rápidas</h3>
+          <div class="action-buttons">
+            <button mat-raised-button color="primary" (click)="joinLiveClass()">
+              <mat-icon>videocam</mat-icon>
+              Entrar na Aula
+            </button>
+            <button mat-raised-button color="accent" (click)="uploadAssignment()">
+              <mat-icon>upload</mat-icon>
+              Enviar Tarefa
+            </button>
+            <button mat-raised-button color="warn" (click)="logout()">
+              <mat-icon>logout</mat-icon>
+              Sair
+            </button>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

@@ -1,0 +1,90 @@
+<app-sidebar>
+  <div class="students-container">
+    <mat-card class="header-card">
+      <mat-card-header>
+        <mat-card-title>
+          <mat-icon>people</mat-icon>
+          Alunos
+        </mat-card-title>
+        <mat-card-subtitle>Gerencie os alunos da plataforma</mat-card-subtitle>
+      </mat-card-header>
+    </mat-card>
+
+    <mat-card class="content-card">
+      <mat-card-content>
+        <div *ngIf="isLoading" class="loading-container">
+          <mat-spinner></mat-spinner>
+          <p>Carregando alunos...</p>
+        </div>
+
+        <div *ngIf="!isLoading && students.length === 0" class="empty-state">
+          <mat-icon>people_outline</mat-icon>
+          <h3>Nenhum aluno encontrado</h3>
+          <p>Os alunos aparecerão aqui quando se registrarem na plataforma.</p>
+        </div>
+
+        <div *ngIf="!isLoading && students.length > 0" class="table-container">
+          <table mat-table [dataSource]="students" class="students-table">
+            <ng-container matColumnDef="fullName">
+              <th mat-header-cell *matHeaderCellDef> Nome </th>
+              <td mat-cell *matCellDef="let student"> {{ student.fullName }} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="email">
+              <th mat-header-cell *matHeaderCellDef> Email </th>
+              <td mat-cell *matCellDef="let student"> {{ student.email }} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="createdAt">
+              <th mat-header-cell *matHeaderCellDef> Registrado em </th>
+              <td mat-cell *matCellDef="let student"> {{ formatDate(student.createdAt) }} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="lastLoginAt">
+              <th mat-header-cell *matHeaderCellDef> Último Login </th>
+              <td mat-cell *matCellDef="let student"> {{ formatLastLogin(student.lastLoginAt) }} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="isActive">
+              <th mat-header-cell *matHeaderCellDef> Status </th>
+              <td mat-cell *matCellDef="let student">
+                <span 
+                  class="status-badge"
+                  [class.active]="student.isActive"
+                  [class.inactive]="!student.isActive">
+                  {{ student.isActive ? 'Ativo' : 'Inativo' }}
+                </span>
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="actions">
+              <th mat-header-cell *matHeaderCellDef> Ações </th>
+              <td mat-cell *matCellDef="let student">
+                <div class="actions-cell">
+                  <button 
+                    mat-icon-button 
+                    color="primary"
+                    (click)="viewStudentDetails(student)"
+                    matTooltip="Ver Detalhes">
+                    <mat-icon>visibility</mat-icon>
+                  </button>
+
+                  <button 
+                    mat-icon-button 
+                    [color]="student.isActive ? 'warn' : 'primary'"
+                    (click)="toggleStudentStatus(student)"
+                    [matTooltip]="student.isActive ? 'Desativar' : 'Ativar'">
+                    <mat-icon>{{ student.isActive ? 'block' : 'check_circle' }}</mat-icon>
+                  </button>
+                </div>
+              </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          </table>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</app-sidebar>

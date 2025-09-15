@@ -1,0 +1,57 @@
+<mat-sidenav-container class="sidebar-container">
+  <mat-sidenav mode="side" opened class="sidebar">
+    <div class="sidebar-header">
+      <h2>Tuking</h2>
+      <div class="user-info" *ngIf="currentUser">
+        <p><strong>{{ currentUser.fullName }}</strong></p>
+        <p class="role">{{ currentUser.role }}</p>
+      </div>
+    </div>
+
+    <mat-nav-list class="nav-list">
+      <!-- Dashboard - Todos os usuários -->
+      <a mat-list-item routerLink="/dashboard" routerLinkActive="active">
+        <mat-icon matListItemIcon>dashboard</mat-icon>
+        <span matListItemTitle>Dashboard</span>
+      </a>
+
+      <!-- Turmas - Todos os usuários -->
+      <a mat-list-item routerLink="/classrooms" routerLinkActive="active">
+        <mat-icon matListItemIcon>class</mat-icon>
+        <span matListItemTitle>Turmas</span>
+      </a>
+
+      <!-- Funcionalidades específicas do Professor -->
+      <ng-container *ngIf="isProfessor">
+        <a mat-list-item routerLink="/students" routerLinkActive="active">
+          <mat-icon matListItemIcon>people</mat-icon>
+          <span matListItemTitle>Alunos</span>
+        </a>
+      </ng-container>
+
+      <!-- Funcionalidades específicas do Aluno -->
+      <ng-container *ngIf="isStudent">
+        <a mat-list-item routerLink="/upload-assignment" routerLinkActive="active">
+          <mat-icon matListItemIcon>upload</mat-icon>
+          <span matListItemTitle>Enviar Tarefa</span>
+        </a>
+      </ng-container>
+
+      <!-- Aula ao Vivo - Todos os usuários -->
+      <a mat-list-item routerLink="/live-class" routerLinkActive="active">
+        <mat-icon matListItemIcon>videocam</mat-icon>
+        <span matListItemTitle>Aula ao Vivo</span>
+      </a>
+
+      <!-- Logout -->
+      <a mat-list-item (click)="logout()" class="logout-item">
+        <mat-icon matListItemIcon>logout</mat-icon>
+        <span matListItemTitle>Sair</span>
+      </a>
+    </mat-nav-list>
+  </mat-sidenav>
+
+  <mat-sidenav-content class="main-content">
+    <ng-content></ng-content>
+  </mat-sidenav-content>
+</mat-sidenav-container>

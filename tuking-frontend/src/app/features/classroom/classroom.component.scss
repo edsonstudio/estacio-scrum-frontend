@@ -1,0 +1,286 @@
+.classroom-container {
+  padding: 20px;
+  max-width: 1400px;
+  margin: 0 auto;
+  height: calc(100vh - 40px);
+  display: flex;
+  flex-direction: column;
+}
+
+.header-card {
+  margin-bottom: 20px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+
+  mat-card-header {
+    mat-card-title {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 24px;
+      font-weight: 600;
+
+      mat-icon {
+        font-size: 28px;
+        width: 28px;
+        height: 28px;
+      }
+    }
+
+    mat-card-subtitle {
+      color: rgba(255, 255, 255, 0.8);
+      font-size: 16px;
+    }
+  }
+
+  mat-card-actions {
+    button {
+      background: rgba(255, 255, 255, 0.2);
+      color: white;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+
+      &:hover {
+        background: rgba(255, 255, 255, 0.3);
+      }
+
+      mat-icon {
+        margin-right: 8px;
+      }
+    }
+  }
+}
+
+.classroom-content {
+  display: grid;
+  grid-template-columns: 1fr 400px;
+  gap: 20px;
+  flex: 1;
+  min-height: 0;
+}
+
+.video-card {
+  background: #000;
+  color: white;
+
+  mat-card-header {
+    mat-card-title {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 18px;
+    }
+  }
+}
+
+.video-container {
+  width: 100%;
+  height: 400px;
+  background: #000;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.video-placeholder {
+  text-align: center;
+  color: #666;
+
+  mat-icon {
+    font-size: 48px;
+    width: 48px;
+    height: 48px;
+    margin-bottom: 16px;
+  }
+
+  p {
+    margin: 0;
+    font-size: 16px;
+  }
+}
+
+.chat-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+
+  mat-card-header {
+    mat-card-title {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 18px;
+    }
+  }
+
+  mat-card-content {
+    flex: 1;
+    padding: 0;
+    overflow: hidden;
+  }
+
+  mat-card-actions {
+    padding: 16px;
+    border-top: 1px solid #eee;
+  }
+}
+
+.chat-container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 200px;
+  gap: 16px;
+
+  p {
+    color: #666;
+    font-size: 14px;
+  }
+}
+
+.empty-chat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 200px;
+  text-align: center;
+  color: #999;
+
+  mat-icon {
+    font-size: 48px;
+    width: 48px;
+    height: 48px;
+    margin-bottom: 16px;
+  }
+
+  p {
+    margin: 4px 0;
+    font-size: 14px;
+  }
+}
+
+.messages-container {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.message {
+  max-width: 80%;
+  padding: 12px 16px;
+  border-radius: 18px;
+  background: #f1f1f1;
+  color: #333;
+
+  &.my-message {
+    align-self: flex-end;
+    background: #007bff;
+    color: white;
+  }
+
+  &.professor-message {
+    background: #28a745;
+    color: white;
+  }
+}
+
+.message-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 4px;
+  font-size: 12px;
+  opacity: 0.8;
+}
+
+.sender-name {
+  font-weight: 600;
+}
+
+.message-content {
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.edited-indicator {
+  font-size: 11px;
+  opacity: 0.7;
+  margin-top: 4px;
+  font-style: italic;
+}
+
+.chat-input {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin: 0;
+  padding: 16px;
+
+  .message-input {
+    flex: 1;
+  }
+
+  button {
+    min-width: 48px;
+    height: 48px;
+    border-radius: 50%;
+  }
+}
+
+// Responsividade
+@media (max-width: 1024px) {
+  .classroom-content {
+    grid-template-columns: 1fr;
+    grid-template-rows: 300px 1fr;
+  }
+
+  .video-container {
+    height: 300px;
+  }
+}
+
+@media (max-width: 768px) {
+  .classroom-container {
+    padding: 16px;
+  }
+
+  .header-card {
+    mat-card-header {
+      mat-card-title {
+        font-size: 20px;
+      }
+    }
+
+    mat-card-actions {
+      flex-direction: column;
+      gap: 8px;
+
+      button {
+        width: 100%;
+      }
+    }
+  }
+
+  .classroom-content {
+    gap: 16px;
+  }
+
+  .video-container {
+    height: 250px;
+  }
+
+  .message {
+    max-width: 90%;
+  }
+}

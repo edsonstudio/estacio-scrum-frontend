@@ -1,0 +1,133 @@
+<div class="register-container">
+  <mat-card class="register-card">
+    <mat-card-header>
+      <mat-card-title class="register-title">Criar Conta no Tuking</mat-card-title>
+      <mat-card-subtitle>Preencha os dados para criar sua conta</mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content>
+      <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="register-form">
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Nome Completo</mat-label>
+          <input 
+            matInput 
+            type="text" 
+            formControlName="fullName"
+            placeholder="Seu nome completo"
+            autocomplete="name">
+          <mat-icon matSuffix>person</mat-icon>
+          <mat-error *ngIf="fullName?.hasError('required')">
+            Nome é obrigatório
+          </mat-error>
+          <mat-error *ngIf="fullName?.hasError('minlength')">
+            Nome deve ter pelo menos 2 caracteres
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Email</mat-label>
+          <input 
+            matInput 
+            type="email" 
+            formControlName="email"
+            placeholder="seu@email.com"
+            autocomplete="email">
+          <mat-icon matSuffix>email</mat-icon>
+          <mat-error *ngIf="email?.hasError('required')">
+            Email é obrigatório
+          </mat-error>
+          <mat-error *ngIf="email?.hasError('email')">
+            Por favor, insira um email válido
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Senha</mat-label>
+          <input 
+            matInput 
+            [type]="hidePassword ? 'password' : 'text'"
+            formControlName="password"
+            placeholder="Sua senha"
+            autocomplete="new-password">
+          <button 
+            mat-icon-button 
+            matSuffix 
+            type="button"
+            (click)="hidePassword = !hidePassword"
+            [attr.aria-label]="'Hide password'"
+            [attr.aria-pressed]="hidePassword">
+            <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+          </button>
+          <mat-error *ngIf="password?.hasError('required')">
+            Senha é obrigatória
+          </mat-error>
+          <mat-error *ngIf="password?.hasError('minlength')">
+            Senha deve ter pelo menos 6 caracteres
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Confirmar Senha</mat-label>
+          <input 
+            matInput 
+            [type]="hideConfirmPassword ? 'password' : 'text'"
+            formControlName="confirmPassword"
+            placeholder="Confirme sua senha"
+            autocomplete="new-password">
+          <button 
+            mat-icon-button 
+            matSuffix 
+            type="button"
+            (click)="hideConfirmPassword = !hideConfirmPassword"
+            [attr.aria-label]="'Hide password'"
+            [attr.aria-pressed]="hideConfirmPassword">
+            <mat-icon>{{hideConfirmPassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+          </button>
+          <mat-error *ngIf="confirmPassword?.hasError('required')">
+            Confirmação de senha é obrigatória
+          </mat-error>
+          <mat-error *ngIf="confirmPassword?.hasError('passwordMismatch')">
+            As senhas não coincidem
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Tipo de Usuário</mat-label>
+          <mat-select formControlName="role">
+            <mat-option [value]="1">Aluno</mat-option>
+            <mat-option [value]="2">Professor</mat-option>
+          </mat-select>
+          <mat-icon matSuffix>person</mat-icon>
+          <mat-error *ngIf="role?.hasError('required')">
+            Tipo de usuário é obrigatório
+          </mat-error>
+        </mat-form-field>
+
+        <div class="form-actions">
+          <button 
+            mat-raised-button 
+            color="primary" 
+            type="submit"
+            [disabled]="registerForm.invalid || isLoading"
+            class="register-button">
+            <mat-spinner *ngIf="isLoading" diameter="20" class="button-spinner"></mat-spinner>
+            <span *ngIf="!isLoading">Criar Conta</span>
+            <span *ngIf="isLoading">Criando...</span>
+          </button>
+        </div>
+
+        <div class="error-message" *ngIf="errorMessage">
+          <mat-icon color="warn">error</mat-icon>
+          <span>{{ errorMessage }}</span>
+        </div>
+      </form>
+    </mat-card-content>
+
+    <mat-card-actions class="card-actions">
+      <p class="login-link">
+        Já tem uma conta? 
+        <a routerLink="/login" class="link">Fazer login</a>
+      </p>
+    </mat-card-actions>
+  </mat-card>
+</div>

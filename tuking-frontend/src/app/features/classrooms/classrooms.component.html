@@ -1,0 +1,103 @@
+<app-sidebar>
+  <div class="classrooms-container">
+    <mat-card class="header-card">
+      <mat-card-header>
+        <mat-card-title>
+          <mat-icon>class</mat-icon>
+          Turmas
+        </mat-card-title>
+        <mat-card-subtitle>
+          {{ isProfessor ? 'Gerencie suas turmas' : 'Visualize suas turmas' }}
+        </mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-actions *ngIf="isProfessor">
+        <button mat-raised-button color="primary" (click)="createClassroom()">
+          <mat-icon>add</mat-icon>
+          Nova Turma
+        </button>
+      </mat-card-actions>
+    </mat-card>
+
+    <mat-card class="content-card">
+      <mat-card-content>
+        <div *ngIf="isLoading" class="loading-container">
+          <mat-spinner></mat-spinner>
+          <p>Carregando turmas...</p>
+        </div>
+
+        <div *ngIf="!isLoading && classrooms.length === 0" class="empty-state">
+          <mat-icon>class</mat-icon>
+          <h3>Nenhuma turma encontrada</h3>
+          <p *ngIf="isProfessor">Crie sua primeira turma para começar!</p>
+          <p *ngIf="!isProfessor">Você ainda não está inscrito em nenhuma turma.</p>
+        </div>
+
+        <div *ngIf="!isLoading && classrooms.length > 0" class="table-container">
+          <table mat-table [dataSource]="classrooms" class="classrooms-table">
+            <ng-container matColumnDef="name">
+              <th mat-header-cell *matHeaderCellDef> Nome </th>
+              <td mat-cell *matCellDef="let classroom"> {{ classroom.name }} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="subject">
+              <th mat-header-cell *matHeaderCellDef> Matéria </th>
+              <td mat-cell *matCellDef="let classroom"> {{ classroom.subject }} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="professorName">
+              <th mat-header-cell *matHeaderCellDef> Professor </th>
+              <td mat-cell *matCellDef="let classroom"> {{ classroom.professorName }} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="studentCount">
+              <th mat-header-cell *matHeaderCellDef> Alunos </th>
+              <td mat-cell *matCellDef="let classroom"> {{ classroom.studentCount }} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="createdAt">
+              <th mat-header-cell *matHeaderCellDef> Criada em </th>
+              <td mat-cell *matCellDef="let classroom"> {{ formatDate(classroom.createdAt) }} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="actions">
+              <th mat-header-cell *matHeaderCellDef> Ações </th>
+              <td mat-cell *matCellDef="let classroom">
+                <div class="actions-cell">
+                  <button 
+                    mat-icon-button 
+                    color="primary"
+                    (click)="joinClassroom(classroom)"
+                    *ngIf="!isProfessor"
+                    matTooltip="Entrar na Turma">
+                    <mat-icon>login</mat-icon>
+                  </button>
+
+                  <button 
+                    mat-icon-button 
+                    color="primary"
+                    (click)="editClassroom(classroom)"
+                    *ngIf="isProfessor"
+                    matTooltip="Editar">
+                    <mat-icon>edit</mat-icon>
+                  </button>
+
+                  <button 
+                    mat-icon-button 
+                    color="warn"
+                    (click)="deleteClassroom(classroom)"
+                    *ngIf="isProfessor"
+                    matTooltip="Excluir">
+                    <mat-icon>delete</mat-icon>
+                  </button>
+                </div>
+              </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          </table>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</app-sidebar>

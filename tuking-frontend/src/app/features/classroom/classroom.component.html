@@ -1,0 +1,103 @@
+<app-sidebar>
+  <div class="classroom-container">
+    <mat-card class="header-card">
+      <mat-card-header>
+        <mat-card-title>
+          <mat-icon>class</mat-icon>
+          Turma - {{ classroomId }}
+        </mat-card-title>
+        <mat-card-subtitle>Chat e videochamada em tempo real</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-actions>
+        <button mat-raised-button color="primary" (click)="startVideoCall()">
+          <mat-icon>videocam</mat-icon>
+          Videochamada
+        </button>
+        <button 
+          mat-raised-button 
+          color="accent" 
+          (click)="startScreenShare()"
+          *ngIf="isProfessor">
+          <mat-icon>screen_share</mat-icon>
+          Compartilhar Tela
+        </button>
+      </mat-card-actions>
+    </mat-card>
+
+    <div class="classroom-content">
+      <!-- Área de Video -->
+      <mat-card class="video-card">
+        <mat-card-header>
+          <mat-card-title>
+            <mat-icon>videocam</mat-icon>
+            Video
+          </mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="video-container">
+            <div class="video-placeholder">
+              <mat-icon>videocam_off</mat-icon>
+              <p>Video não disponível</p>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+
+      <!-- Área de Chat -->
+      <mat-card class="chat-card">
+        <mat-card-header>
+          <mat-card-title>
+            <mat-icon>chat</mat-icon>
+            Chat
+          </mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="chat-container">
+            <div *ngIf="isLoading" class="loading-container">
+              <mat-spinner></mat-spinner>
+              <p>Carregando mensagens...</p>
+            </div>
+
+            <div *ngIf="!isLoading && messages.length === 0" class="empty-chat">
+              <mat-icon>chat_bubble_outline</mat-icon>
+              <p>Nenhuma mensagem ainda</p>
+              <p>Seja o primeiro a enviar uma mensagem!</p>
+            </div>
+
+            <div *ngIf="!isLoading && messages.length > 0" class="messages-container">
+              <div 
+                *ngFor="let message of messages" 
+                class="message"
+                [class.my-message]="isMyMessage(message)"
+                [class.professor-message]="message.senderRole === 'Professor'">
+                <div class="message-header">
+                  <span class="sender-name">{{ message.senderName }}</span>
+                  <span class="message-time">{{ formatTime(message.sentAt) }}</span>
+                </div>
+                <div class="message-content">{{ message.content }}</div>
+                <div *ngIf="message.isEdited" class="edited-indicator">(editado)</div>
+              </div>
+            </div>
+          </div>
+        </mat-card-content>
+        <mat-card-actions class="chat-input">
+          <mat-form-field appearance="outline" class="message-input">
+            <mat-label>Digite sua mensagem...</mat-label>
+            <input 
+              matInput 
+              [(ngModel)]="newMessage"
+              (keyup.enter)="sendMessage()"
+              placeholder="Digite sua mensagem...">
+          </mat-form-field>
+          <button 
+            mat-raised-button 
+            color="primary" 
+            (click)="sendMessage()"
+            [disabled]="!newMessage.trim()">
+            <mat-icon>send</mat-icon>
+          </button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+  </div>
+</app-sidebar>

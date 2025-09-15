@@ -1,0 +1,155 @@
+.classrooms-container {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.header-card {
+  margin-bottom: 20px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+
+  mat-card-header {
+    mat-card-title {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 24px;
+      font-weight: 600;
+
+      mat-icon {
+        font-size: 28px;
+        width: 28px;
+        height: 28px;
+      }
+    }
+
+    mat-card-subtitle {
+      color: rgba(255, 255, 255, 0.8);
+      font-size: 16px;
+    }
+  }
+
+  mat-card-actions {
+    button {
+      background: rgba(255, 255, 255, 0.2);
+      color: white;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+
+      &:hover {
+        background: rgba(255, 255, 255, 0.3);
+      }
+
+      mat-icon {
+        margin-right: 8px;
+      }
+    }
+  }
+}
+
+.content-card {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+}
+
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  gap: 16px;
+
+  p {
+    color: #666;
+    font-size: 16px;
+  }
+}
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+  text-align: center;
+
+  mat-icon {
+    font-size: 64px;
+    width: 64px;
+    height: 64px;
+    color: #ccc;
+    margin-bottom: 16px;
+  }
+
+  h3 {
+    color: #666;
+    margin-bottom: 8px;
+  }
+
+  p {
+    color: #999;
+    font-size: 14px;
+  }
+}
+
+.table-container {
+  overflow-x: auto;
+}
+
+.classrooms-table {
+  width: 100%;
+  background: white;
+
+  th {
+    background: #f5f5f5;
+    font-weight: 600;
+    color: #333;
+  }
+
+  td {
+    border-bottom: 1px solid #eee;
+  }
+
+  tr:hover {
+    background: #f9f9f9;
+  }
+}
+
+.actions-cell {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+
+  button {
+    transition: all 0.2s ease;
+
+    &:hover {
+      transform: scale(1.1);
+    }
+  }
+}
+
+// Responsividade
+@media (max-width: 768px) {
+  .classrooms-container {
+    padding: 16px;
+  }
+
+  .header-card {
+    mat-card-header {
+      mat-card-title {
+        font-size: 20px;
+      }
+    }
+  }
+
+  .table-container {
+    font-size: 14px;
+  }
+
+  .actions-cell {
+    flex-direction: column;
+    gap: 4px;
+  }
+}
