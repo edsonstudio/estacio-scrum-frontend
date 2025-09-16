@@ -1,4 +1,4 @@
 export const environment = {
   production: false,
-  apiUrl: 'https://scrum-backend-g9esfvdna5dughba.brazilsouth-01.azurewebsites.net'
+  apiUrl: 'https://backend-scrum-g4cjg6hbd0b8cmf2.northeurope-01.azurewebsites.net'
 };
