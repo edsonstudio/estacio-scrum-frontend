@@ -1,20 +1,46 @@
-<div class="login-container">
+<div class="login-page-wrapper">
+  <header class="header">
+    <img
+      class="logo"
+      alt="Logo Tuking"
+      src="https://horizons-cdn.hostinger.com/423dd325-19b9-498f-b316-8ed9e10ea3c7/19fe4aab5350bff3f8d9f0fb6152001a.png"
+    />
+    <h1 class="title-page-login">Welcome!</h1>
+    <p class="subtitle-page">Where communication takes flight</p>
+  </header>
+
   <mat-card class="login-card">
-    <mat-card-header>
-      <mat-card-title class="login-title">Entrar no Tuking</mat-card-title>
-      <mat-card-subtitle>Faça login para acessar sua conta</mat-card-subtitle>
+    <mat-card-header class="card-header">
+      <mat-card-title class="login-card-title">Login</mat-card-title>
+      <mat-card-subtitle class="subtitle-page-login">Acesse sua conta para continuar</mat-card-subtitle>
     </mat-card-header>
 
     <mat-card-content>
       <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form">
+        
+        <!-- Campo de Seleção do Perfil (antes de email e senha) -->
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Tipo de Usuário</mat-label>
+          <mat-select formControlName="role">
+            <!-- <mat-option value="admin">Administrador</mat-option> -->
+            <mat-option value="professor">Professor</mat-option>
+            <mat-option value="aluno">Aluno</mat-option>
+          </mat-select>
+          <mat-error *ngIf="loginForm.get('role')?.hasError('required')">
+            Selecione um tipo de usuário
+          </mat-error>
+        </mat-form-field> 
+
+        <!-- Campo de Email -->
         <mat-form-field appearance="outline" class="full-width">
           <mat-label>Email</mat-label>
-          <input 
-            matInput 
-            type="email" 
+          <input
+            matInput
+            type="email"
             formControlName="email"
             placeholder="seu@email.com"
-            autocomplete="email">
+            autocomplete="email"
+          />
           <mat-icon matSuffix>email</mat-icon>
           <mat-error *ngIf="loginForm.get('email')?.hasError('required')">
             Email é obrigatório
@@ -24,22 +50,25 @@
           </mat-error>
         </mat-form-field>
 
+        <!-- Campo de Senha -->
         <mat-form-field appearance="outline" class="full-width">
           <mat-label>Senha</mat-label>
-          <input 
-            matInput 
+          <input
+            matInput
             [type]="hidePassword ? 'password' : 'text'"
             formControlName="password"
             placeholder="Sua senha"
-            autocomplete="current-password">
-          <button 
-            mat-icon-button 
-            matSuffix 
+            autocomplete="current-password"
+          />
+          <button
+            mat-icon-button
+            matSuffix
             type="button"
             (click)="hidePassword = !hidePassword"
             [attr.aria-label]="'Hide password'"
-            [attr.aria-pressed]="hidePassword">
-            <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+            [attr.aria-pressed]="hidePassword"
+          >
+            <mat-icon>{{ hidePassword ? "visibility_off" : "visibility" }}</mat-icon>
           </button>
           <mat-error *ngIf="loginForm.get('password')?.hasError('required')">
             Senha é obrigatória
@@ -49,19 +78,22 @@
           </mat-error>
         </mat-form-field>
 
+        <!-- Botão -->
         <div class="form-actions">
-          <button 
-            mat-raised-button 
-            color="primary" 
+          <button
+            mat-raised-button
+            color="primary"
             type="submit"
             [disabled]="loginForm.invalid || isLoading"
-            class="login-button">
+            class="login-button"
+          >
             <mat-spinner *ngIf="isLoading" diameter="20" class="button-spinner"></mat-spinner>
-            <span *ngIf="!isLoading">Entrar</span>
+            <span *ngIf="!isLoading">Login</span>
             <span *ngIf="isLoading">Entrando...</span>
           </button>
         </div>
 
+        <!-- Mensagem de Erro -->
         <div class="error-message" *ngIf="errorMessage">
           <mat-icon color="warn">error</mat-icon>
           <span>{{ errorMessage }}</span>
@@ -69,11 +101,11 @@
       </form>
     </mat-card-content>
 
-    <mat-card-actions class="card-actions">
-      <p class="register-link">
-        Não tem uma conta? 
+    <!-- <mat-card-actions class="card-actions">
+    <p class="register-link">
+        Não tem uma conta?
         <a routerLink="/register" class="link">Criar conta</a>
       </p>
-    </mat-card-actions>
+    </mat-card-actions>-->
   </mat-card>
 </div>

@@ -8,6 +8,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatSelectModule } from '@angular/material/select'; // 👈 ADICIONE ESTA LINHA
 import { AuthService, LoginCredentials } from '../../../core/auth.service';
 
 @Component({
@@ -22,7 +23,8 @@ import { AuthService, LoginCredentials } from '../../../core/auth.service';
     MatInputModule,
     MatButtonModule,
     MatIconModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatSelectModule // 👈 E ESTA LINHA NO ARRAY
   ],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
@@ -45,6 +47,7 @@ export class LoginComponent implements OnInit {
 
   private initializeForm(): void {
     this.loginForm = this.fb.group({
+      role: ['', Validators.required], // agora vem primeiro
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]]
     });
@@ -70,7 +73,6 @@ export class LoginComponent implements OnInit {
           console.error('Erro no login:', error);
           this.isLoading = false;
           
-          // Tratar diferentes tipos de erro
           if (error.status === 401) {
             this.errorMessage = 'Email ou senha incorretos';
           } else if (error.status === 0) {
@@ -83,7 +85,6 @@ export class LoginComponent implements OnInit {
         }
       });
     } else {
-      // Marcar todos os campos como tocados para mostrar erros de validação
       this.markFormGroupTouched();
     }
   }
@@ -95,7 +96,6 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  // Getters para facilitar o acesso aos controles no template
   get email() { return this.loginForm.get('email'); }
   get password() { return this.loginForm.get('password'); }
 }

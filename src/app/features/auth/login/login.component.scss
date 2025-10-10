@@ -1,57 +1,180 @@
-.login-container {
+.login-page-wrapper {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  padding: 20px;
+  padding: 1rem;
+  font-family: "Roboto", "Roboto Mono", sans-serif;
+  background-color: #f9fafb;
+}
+
+.w-config {
+  width: 100%;
+  max-width: 28rem;
+  margin: 0;
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 2rem 2rem 1rem;
+  margin-bottom: 1rem;
+}
+
+.logo {
+  height: 5rem;
+  width: auto;
+  margin-bottom: 1.5rem;
+}
+
+.title-page-login {
+  color: rgb(17, 24, 39);
+  font-weight: 700;
+  font-size: 1.875rem;
+  line-height: 2.25rem;
+  margin-bottom: 0.5rem;
+}
+
+.login-card-title {
+  color: rgb(17, 24, 39);
+  font-weight: 700;
+  font-size: 1.5rem;
+  line-height: 2.25rem;
+  margin-bottom: 0.5rem;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.subtitle-page-login {
+  font-weight: 300;
+  font-size: .875rem;
+  color: #374151;
+  margin: 0;
 }
 
 .login-card {
+  background-color: #ffffff;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+  padding: 2rem 1.5rem;
   width: 100%;
-  max-width: 400px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-  border-radius: 16px;
-  backdrop-filter: blur(10px);
-  background: rgba(255, 255, 255, 0.95);
+  max-width: 32rem; /* 🔹 aumente aqui (antes era ~28rem) */
 }
 
-.login-title {
-  text-align: center;
-  font-size: 24px;
-  font-weight: 600;
-  color: #333;
-  margin-bottom: 8px;
+.card-header {
+  display: flex;
+  flex-direction: column; /* empilha título e subtítulo */
+  align-items: center;    /* centraliza horizontalmente */
+  text-align: center;     /* centraliza o texto */
+  margin-bottom: 1rem;
 }
 
 .login-form {
   display: flex;
   flex-direction: column;
-  gap: 16px;
-  margin-top: 24px;
+  gap: 1rem;
+  margin-top: 1.5rem;
 }
 
 .full-width {
   width: 100%;
 }
 
+::ng-deep .full-width .mat-select-value-text {
+  padding-left: 12px !important;
+}
+
+::ng-deep .full-width .mat-select-value {
+  padding-left: 12px !important;
+}
+
+/* === Ajustes do mat-select (lista de perfil) === */
+mat-form-field.full-width {
+  margin-bottom: 0.5rem;
+}
+
+// ::ng-deep .mat-mdc-select {
+//   background-color: #fff !important;
+//   border-radius: 6px !important;
+// }
+
+// ::ng-deep .mat-mdc-form-field-flex {
+//   background-color: #fff !important;
+//   border-radius: 6px !important;
+// }
+
+::ng-deep .mat-mdc-form-field-infix {
+  min-height: 3.2rem;
+  padding-left: 10px;
+}
+
+::ng-deep .mat-mdc-select-arrow-wrapper {
+  padding-right: 10px; /* ou o valor que preferir */
+}
+
+::ng-deep .mat-mdc-form-field-error {
+  font-size: 12px; /* ou o tamanho que preferir */
+}
+
+// ::ng-deep .mat-mdc-select-value {
+//   font-size: 1rem !important;
+//   color: #1f2937 !important;
+// }
+
+/* === Estilo do painel de opções (lista suspensa) === */
+::ng-deep .mat-mdc-select-panel {
+  background-color: #ffffff !important;
+  border: 1px solid #e5e7eb !important;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15) !important;
+  border-radius: 6px !important;
+  padding: 0 !important;
+  font-family: "Roboto", "Roboto Mono", sans-serif;
+}
+
+::ng-deep .mat-mdc-option {
+  font-size: 0.95rem !important;
+  color: #1f2937 !important;
+  height: 40px !important;
+  line-height: 40px !important;
+  padding: 0 16px !important;
+}
+
+// ::ng-deep .mat-mdc-option:hover {
+//   background-color: #f3f4f6 !important;
+// }
+
+// ::ng-deep .mat-mdc-option.mat-selected {
+//   background-color: #fd8d01 !important;
+//   color: #fff !important;
+// }
+
+/* === Botão de login === */
 .form-actions {
-  margin-top: 24px;
+  margin-top: 1.5rem;
   display: flex;
   justify-content: center;
 }
 
-.login-button {
+.form-actions > button {
   width: 100%;
   height: 48px;
-  font-size: 16px;
-  font-weight: 500;
-  border-radius: 8px;
-  position: relative;
-}
+  background-color: #fd8d01;
+  color: #ffffff;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: all 0.2s ease-in-out;
+  cursor: pointer;
 
-.button-spinner {
-  margin-right: 8px;
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
 }
 
 .error-message {
@@ -63,28 +186,22 @@
   padding: 12px 16px;
   border-radius: 8px;
   border-left: 4px solid #f44336;
-  margin-top: 16px;
+  margin-top: 1rem;
   font-size: 14px;
 }
 
-.card-actions {
-  display: flex;
-  justify-content: center;
-  padding: 16px 24px 24px;
-}
-
+/* === Link de registro === */
 .register-link {
   text-align: center;
   color: #666;
   font-size: 14px;
-  margin: 0;
+  margin-top: 1rem;
 }
 
 .link {
   color: #1976d2;
   text-decoration: none;
   font-weight: 500;
-  transition: color 0.3s ease;
 
   &:hover {
     color: #1565c0;
@@ -92,17 +209,18 @@
   }
 }
 
-// Responsividade
+/* === Responsividade === */
 @media (max-width: 480px) {
-  .login-container {
-    padding: 16px;
-  }
-  
   .login-card {
-    max-width: 100%;
+    padding: 1.5rem;
   }
-  
-  .login-title {
-    font-size: 20px;
+
+  .title-page-login {
+    font-size: 1.5rem;
+  }
+
+  .subtitle-page-login {
+    font-size: 0.95rem;
   }
 }
+
