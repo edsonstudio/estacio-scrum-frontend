@@ -1,10 +1,13 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
+import { AuthService, User } from '../../core/auth.service';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { Router } from '@angular/router';
-import { AuthService, User } from '../../core/auth.service';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatListModule } from '@angular/material/list';
+import { MatDividerModule } from '@angular/material/divider';
 
 @Component({
   selector: 'app-dashboard',
@@ -13,13 +16,22 @@ import { AuthService, User } from '../../core/auth.service';
     CommonModule,
     MatCardModule,
     MatButtonModule,
-    MatIconModule
+    MatIconModule,
+    MatToolbarModule,
+    MatListModule,
+    MatDividerModule
   ],
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit {
   currentUser: User | null = null;
+
+  totalAlunos: number = 0;
+  aulasHoje: number = 0;
+  proximasAulas: any[] = [];
+  meusAlunos: any[] = [];
+  materiaisDeAula: any[] = [];
 
   private authService = inject(AuthService);
   private router = inject(Router);

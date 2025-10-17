@@ -1,41 +1,124 @@
 <div class="dashboard-container">
   <!-- Dashboard do Professor -->
-  <div *ngIf="currentUser?.role === 'Professor'" class="professor-dashboard">
-    <mat-card class="welcome-card professor-card">
+  <div class="dashboard-page">
+  <div class="header-container">
+    <div class="logo-section">
+      <img src="assets/images/tucano.png" alt="Logo" class="toolbar-logo">
+      <div class="title-group">
+        <span class="main-title">Dashboard do Professor</span>
+        <span class="sub-title">Bem-vindo, {{ currentUser?.fullName }}</span>
+      </div>
+    </div>
+    <button mat-stroked-button (click)="logout()">
+      <mat-icon>exit_to_app</mat-icon>
+      Sair
+    </button>
+  </div>
+
+  <div class="dashboard-content">
+      <div class="stats-container">
+        <mat-card class="stat-card">
+          <div class="stat-info">
+            <span class="stat-value total-alunos-color">{{ totalAlunos }}</span>
+            <span class="stat-label">Total de Alunos</span>
+          </div>
+          <div class="stat-icon-wrapper total-alunos-bg">
+            <mat-icon class="stat-icon">groups</mat-icon>
+          </div>
+        </mat-card>
+
+        <mat-card class="stat-card">
+          <div class="stat-info">
+            <span class="stat-value aulas-hoje-color">{{ aulasHoje }}</span>
+            <span class="stat-label">Aulas Hoje</span>
+          </div>
+          <div class="stat-icon-wrapper aulas-hoje-bg">
+            <mat-icon class="stat-icon">today</mat-icon>
+          </div>
+        </mat-card>
+
+        <a href="https://link-externo-para-materiais.com" target="_blank" rel="noopener noreferrer" class="stat-card-link">
+          <mat-card class="stat-card">
+            <div class="stat-info">
+              <span class="stat-label">Materiais</span>
+              <span class="stat-value">&nbsp;</span> </div>
+            <div class="stat-icon-wrapper materiais-bg">
+              <mat-icon class="stat-icon">folder_open</mat-icon>
+            </div>
+          </mat-card>
+        </a>
+    </div>
+
+    <div class="main-sections">
+      <mat-card class="list-card">
+        <mat-card-header>
+          <mat-card-title><mat-icon>watch_later</mat-icon> Próximas Aulas</mat-card-title>
+          <mat-card-subtitle>Suas aulas agendadas para hoje e amanhã</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <mat-list *ngIf="proximasAulas && proximasAulas.length > 0">
+            <div *ngFor="let aula of proximasAulas; last as isLast">
+              <mat-list-item>
+                <div class="list-item-content">
+                  <span class="item-title">{{ aula.nome }}</span>
+                  <span class="item-subtitle">{{ aula.materia }}</span>
+                  <span class="item-detail">{{ aula.horario }}</span>
+                </div>
+                <button mat-flat-button color="primary">Entrar</button>
+              </mat-list-item>
+              <mat-divider *ngIf="!isLast"></mat-divider>
+            </div>
+          </mat-list>
+          <div *ngIf="!proximasAulas || proximasAulas.length === 0" class="empty-state">
+            <mat-icon>event_avaible</mat-icon>
+            <span>Nenhuma aula agendada por enquanto.</span>
+          </div>
+        </mat-card-content>
+      </mat-card>
+      
+      <mat-card class="list-card">
+        <mat-card-header>
+          <mat-card-title><mat-icon>people</mat-icon> Meus Alunos</mat-card-title>
+          <mat-card-subtitle>Lista de todos os seus alunos</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <mat-list>
+            <div *ngFor="let aluno of meusAlunos; last as isLast">
+              <mat-list-item>
+                <div class="list-item-content">
+                  <span class="item-title">{{ aluno.nome }}</span>
+                  <span class="item-subtitle">{{ aluno.email }}</span>
+                </div>
+                <button mat-stroked-button class="view-button"><mat-icon>visibility</mat-icon> Ver</button>
+              </mat-list-item>
+              <mat-divider *ngIf="!isLast"></mat-divider>
+            </div>
+          </mat-list>
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+    <mat-card class="materials-card">
       <mat-card-header>
         <mat-card-title>
-          <mat-icon>school</mat-icon>
-          Dashboard do Professor
+          <mat-icon>menu_book</mat-icon>Materiais de Aula
         </mat-card-title>
-        <mat-card-subtitle>Gerencie suas aulas e materiais</mat-card-subtitle>
+        <mat-card-subtitle>Seus recursos e conteúdos para as aulas</mat-card-subtitle>
+        <span class="header-spacer"></span>
+        <button mat-flat-button color="primary"><mat-icon>add</mat-icon> Adicionar</button>
       </mat-card-header>
-
-      <mat-card-content>
-        <div class="user-info" *ngIf="currentUser">
-          <p><strong>Professor:</strong> {{ currentUser.fullName }}</p>
-          <p><strong>Email:</strong> {{ currentUser.email }}</p>
-        </div>
-        
-        <div class="quick-actions">
-          <h3>Ações Rápidas</h3>
-          <div class="action-buttons">
-            <button mat-raised-button color="primary" (click)="startLiveClass()">
-              <mat-icon>videocam</mat-icon>
-              Iniciar Aula ao Vivo
-            </button>
-            <button mat-raised-button color="accent" (click)="viewStudents()">
-              <mat-icon>people</mat-icon>
-              Ver Alunos
-            </button>
-            <button mat-raised-button color="warn" (click)="logout()">
-              <mat-icon>logout</mat-icon>
-              Sair
-            </button>
+      <mat-card-content class="materials-content">
+        <div *ngFor="let material of materiaisDeAula" class="material-item">
+          <mat-icon class="material-icon">{{ material.icone }}</mat-icon>
+          <div class="material-info">
+            <span class="item-title">{{ material.nome }}</span>
+            <span class="item-subtitle">{{ material.tipo }}</span>
           </div>
         </div>
       </mat-card-content>
     </mat-card>
   </div>
+</div>
 
   <!-- Dashboard do Aluno -->
   <div *ngIf="currentUser?.role === 'Aluno'" class="student-dashboard">

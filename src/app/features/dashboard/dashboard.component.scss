@@ -1,128 +1,318 @@
-.dashboard-container {
-  padding: 20px;
-  max-width: 1200px;
-  margin: 0 auto;
-  min-height: calc(100vh - 40px);
-  background: transparent;
+// --- Variáveis de Cor do Design ---
+$primary-color: #f7931a;
+$text-color-dark: #333333;
+$text-color-light: #6c757d;
+$border-color: #dee2e6;
+$background-color: #ffffff;
+$card-background: #ffffff;
+// Cores individuais para os ícones
+$color-alunos: #29b6f6;
+$color-aulas: #f7931a;
+$color-materiais: #66bb6a;
+$item-background-color: #f0f2f5;
+
+// --- Estilos Globais do Componente ---
+:host {
+  font-family: 'Roboto', "Roboto Mono", sans-serif;
+  display: block;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: $background-color;
+  height: 100vh;
 }
 
-.welcome-card {
-  margin-bottom: 20px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-  border-radius: 16px;
-  backdrop-filter: blur(10px);
-}
-
-.professor-card {
-  background: linear-gradient(135deg, #4caf50 0%, #45a049 100%);
-  color: white;
-
-  mat-card-header {
-    mat-card-title {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      font-size: 24px;
-      font-weight: 600;
-
-      mat-icon {
-        font-size: 28px;
-        width: 28px;
-        height: 28px;
-      }
-    }
-
-    mat-card-subtitle {
-      color: rgba(255, 255, 255, 0.8);
-      font-size: 16px;
-    }
-  }
-}
-
-.student-card {
-  background: linear-gradient(135deg, #2196f3 0%, #1976d2 100%);
-  color: white;
-
-  mat-card-header {
-    mat-card-title {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      font-size: 24px;
-      font-weight: 600;
-
-      mat-icon {
-        font-size: 28px;
-        width: 28px;
-        height: 28px;
-      }
-    }
-
-    mat-card-subtitle {
-      color: rgba(255, 255, 255, 0.8);
-      font-size: 16px;
-    }
-  }
-}
-
-.user-info {
-  margin: 16px 0;
-  
-  p {
-    margin: 8px 0;
-    font-size: 16px;
-  }
-}
-
-.quick-actions {
-  margin-top: 24px;
-
-  h3 {
-    margin-bottom: 16px;
-    font-size: 18px;
-    font-weight: 500;
-  }
-}
-
-.action-buttons {
+.dashboard-page {
   display: flex;
-  gap: 12px;
-  flex-wrap: wrap;
+  flex-direction: column;
+  height: 100%;
+}
 
-  button {
+// --- Cabeçalho Superior ---
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: $card-background;
+  padding: 5px 16px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  flex-shrink: 0;
+  border-bottom: 1px solid $border-color;
+
+  .logo-section { display: flex; align-items: center; }
+
+  // ---  LOGO ---
+  .toolbar-logo {
+    height: 32px;
+    width: auto;
+    flex-shrink: 0;
+    display: block;
+    margin-right: 12px;
+  }
+
+  .title-group { display: flex; flex-direction: column; }
+  .main-title { font-size: 1rem; font-weight: 500; }
+  .sub-title { font-size: 0.75rem; color: $text-color-light; }
+}
+
+// --- Conteúdo Principal ---
+.dashboard-content {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 60px 80px;
+  padding-top: 2%;
+  flex: 1;
+  overflow-y: auto;
+  box-sizing: border-box;
+}
+
+// --- Cards de Resumo ---
+.stats-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 45px;
+  margin-bottom: 30px;
+}
+
+.stat-card-link { text-decoration: none; display: flex; width: 100%; }
+.stat-card {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 10px;
+  border: none;
+  border-radius: 6px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  background: $card-background;
+  width: 100%;
+  
+  .stat-info {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 12px;
+    flex-grow: 1;
+    justify-content: center;
+  }
+  .stat-value { 
+    font-size: 1.5rem; 
+    font-weight: bold; 
+  }
+  .stat-label { 
+    font-size: 1.3rem;
+    font-weight: bold;
+    color: $text-color-dark;
+  }
+
+  .total-alunos-color { color: $color-alunos;}
+  .aulas-hoje-color { color: $color-aulas;}
+
+  .stat-icon-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-left: 12px;
+
+    .stat-icon {
+      color: white;
+      font-size: 20px; width: 20px; height: 20px;
+    }
+
+    &.total-alunos-bg { background-color: $color-alunos;}
+    &.aulas-hoje-bg { background-color: $color-aulas;}
+    &.materiais-bg { background-color: $color-materiais;}
+  }
+
+  &.total-alunos-card {
+    .stat-value, .stat-icon { color: $color-alunos; }
+  }
+  &.aulas-hoje-card {
+    .stat-value, .stat-icon { color: $color-aulas; }
+  }
+  &.materiais-card-link {
+    .stat-value, .stat-icon { color: $color-materiais; }
+  }
+}
+
+// --- Seções Principais (Aulas e Alunos) ---
+.main-sections {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+  margin-bottom: 30px;
+  align-items: start;
+}
+
+.list-card {
+  border: none;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  border-radius: 6px;
+  padding: 5px 10px;
+  background: $card-background;
+
+  mat-card-title {
+    display: flex;
+    align-items: center;
+    font-size: 1.2rem;
+    font-weight: bold;
+    gap: 8px;
+  }
+  
+  mat-list-item {
+    height: auto !important;
+    padding: 8px 10px !important;
+  }
+  
+  ::ng-deep .mat-mdc-list-item-unscoped-content {
+    display: flex !important;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+  }
+
+  .list-item-content {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .item-title { font-weight: bold; }
+  .item-detail { color: blue; }
+}
+
+// --- Seção de Materiais ---
+.materials-card {
+  border: none;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  border-radius: 6px;
+  padding: 5px 20px;
+  background: $card-background;
+
+  .mat-mdc-card-header mat-card-title {
+    font-weight: bold !important;
     display: flex;
     align-items: center;
     gap: 8px;
-    padding: 12px 24px;
-    border-radius: 8px;
-    font-weight: 500;
-    transition: all 0.3s ease;
+  }
 
-    mat-icon {
-      font-size: 20px;
-      width: 20px;
-      height: 20px;
-    }
+  .mat-mdc-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+  }
 
-    &:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-    }
+  .materials-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 16px;
+    padding-top: 10px;
+  }
+  
+  .material-item {
+    display: flex;
+    align-items: center;
+    background-color: $item-background-color;
+    border: 1px solid $border-color;
+    padding: 8px;
+    border-radius: 4px;
+  }
+
+  .material-info {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .item-title {
+    font-weight:550;
+    color: $text-color-dark;
+  }
+
+  .item-subtitle {
+    font-size: 0.8rem;
+    color: $text-color-light;
+    margin-top: 2px;
+  }
+
+  .material-icon { margin-right: 12px; color: $color-alunos; }
+}
+
+.view-button {
+  transition: $background-color 0.2s ease-in-out;
+
+  &:hover {
+    background-color: rgba($primary-color, 0.05);
   }
 }
 
-// Responsividade
-@media (max-width: 768px) {
-  .dashboard-container {
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 24px;
+  text-align: center;
+  color: $text-color-light;
+
+  mat-icon {
+    font-size: 48px;
+    width: 48px;
+    height: 48px;
+    margin-bottom: 16px;
+  }
+
+  span {
+    font-size: 1rem;
+  }
+}
+
+// --- Sobrescrevendo Cores dos Botões ---
+button[mat-flat-button][color="primary"] {
+  background-color: $primary-color;
+  color: white;
+}
+
+// === Responsividade === 
+// --- Para Telas de Tablet e Notebooks Pequenos ---
+@media (max-width: 992px) {
+
+  // --- Cards de Resumo ---
+  .stats-container {
+    
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .stats-container > *:nth-child(3) {
+    grid-column: 1 / -1;
+  }
+
+  // --- Seções Principais (Aulas e Alunos) ---
+  .main-sections {
+  
+    grid-template-columns: 1fr;
+  }
+}
+
+
+// --- Para Telas de Celular ---
+@media (max-width: 576px) {
+  
+  .dashboard-content {
     padding: 16px;
   }
 
-  .action-buttons {
-    flex-direction: column;
+  // --- Cards de Resumo ---
+  .stats-container {
+    
+    grid-template-columns: 1fr;
+  }
 
-    button {
-      width: 100%;
-      justify-content: center;
-    }
+  .materials-card .materials-content {
+    grid-template-columns: 1fr;
   }
 }
