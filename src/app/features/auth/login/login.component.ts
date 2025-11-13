@@ -76,7 +76,7 @@ export class LoginComponent implements OnInit {
 
       if (isProfessor || isAluno) {
         const mockUser = {
-          fullName: isProfessor ? 'Professor João' : 'Aluno Pedro José',
+          fullName: isProfessor ? 'João Carlos' : 'Pedro José',
           role: isProfessor ? 'Professor' : 'Aluno',
           email
         };

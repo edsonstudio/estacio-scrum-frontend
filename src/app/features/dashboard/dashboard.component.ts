@@ -72,7 +72,7 @@ export class DashboardComponent implements OnInit {
     this.proximasAulas1 = [
       {
         id: 1,
-        materia: 'Matemática Avançada',
+        materia: 'Simples Past',
         horario: '10:00 - 11:30',
         turma: 'Turma A',
         professor: 'Dr. João Silva',
@@ -80,7 +80,23 @@ export class DashboardComponent implements OnInit {
       },
       {
         id: 2,
-        materia: 'Física Quântica',
+        materia: 'Verb To Be',
+        horario: '14:00 - 15:30',
+        turma: 'Turma B',
+        professor: 'Dr. João Silva', 
+        status: 'agendada'
+      },
+      {
+        id: 3,
+        materia: 'Simples Present',
+        horario: '14:00 - 15:30',
+        turma: 'Turma B',
+        professor: 'Dr. João Silva', 
+        status: 'agendada'
+      },
+      {
+        id: 4,
+        materia: 'Grammar',
         horario: '14:00 - 15:30',
         turma: 'Turma B',
         professor: 'Dr. João Silva', 

@@ -40,6 +40,12 @@ $item-background-color: #f0f2f5;
     transform: translateX(150%)
   }
 
+  .logo-section1 { 
+    display: flex; 
+    align-items: center; 
+    transform: translateX(113%)
+  }
+
   .toolbar-logo {
     height: 40px;
     width: auto;
@@ -105,9 +111,8 @@ $item-background-color: #f0f2f5;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  padding: 8px 10px;
+  padding: 20px 30px;
   border: none;
-  border-radius: 6px;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
   background: $card-background;
   width: 100%;
@@ -144,7 +149,9 @@ $item-background-color: #f0f2f5;
 
     .stat-icon1 {
       color: white;
-      font-size: 20px; width: 20px; height: 20px;
+      font-size: 20px; 
+      width: 40px; 
+      height: 40px;
     }
 
     &.total-alunos-bg1 { background-color: $color-alunos;}
@@ -264,7 +271,7 @@ $item-background-color: #f0f2f5;
     margin-top: 2px;
   }
 
-  .material-icon1 { margin-right: 12px; color: $color-alunos; }
+  .material-icon1 { margin-right: 12px; color: #3B82F6; }
 }
 
 .view-button1 {
