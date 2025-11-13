@@ -1,160 +1,261 @@
 <div class="dashboard-container">
   <!-- Dashboard do Professor -->
-  <div class="dashboard-page">
-  <div class="header-container">
-    <div class="logo-section">
-      <img src="assets/images/tucano.png" alt="Logo" class="toolbar-logo">
-      <div class="title-group">
-        <span class="main-title">Dashboard do Professor</span>
-        <span class="sub-title">Bem-vindo, {{ currentUser?.fullName }}</span>
+  <div *ngIf="currentUser?.role === 'Professor'" class="dashboard-page">
+    <div class="header-container">
+      <div class="logo-section">
+        <img src="https://horizons-cdn.hostinger.com/423dd325-19b9-498f-b316-8ed9e10ea3c7/19fe4aab5350bff3f8d9f0fb6152001a.png" alt="Logo" class="toolbar-logo">
+        <div class="title-group">
+          <span class="main-title">Dashboard do Professor</span>
+          <span class="sub-title">Bem-vindo, {{ currentUser?.fullName }}</span>
+        </div>
       </div>
+      <button mat-stroked-button (click)="logout()">
+        <mat-icon>exit_to_app</mat-icon>
+        Sair
+      </button>
     </div>
-    <button mat-stroked-button (click)="logout()">
-      <mat-icon>exit_to_app</mat-icon>
-      Sair
-    </button>
-  </div>
 
-  <div class="dashboard-content">
-      <div class="stats-container">
-        <mat-card class="stat-card">
-          <div class="stat-info">
-            <span class="stat-value total-alunos-color">{{ totalAlunos }}</span>
-            <span class="stat-label">Total de Alunos</span>
+    <div class="dashboard-content1">
+      <div class="stats-container1">
+        <mat-card class="stat-card1">
+          <div class="stat-info1">
+            <span class="stat-value1 total-alunos-color1">{{ totalAlunos1 }}</span>
+            <span class="stat-label1">Total de Alunos</span>
           </div>
-          <div class="stat-icon-wrapper total-alunos-bg">
-            <mat-icon class="stat-icon">groups</mat-icon>
+          <div class="stat-icon-wrappe1 total-alunos-bg1">
+            <mat-icon class="stat-icon1">groups</mat-icon>
           </div>
         </mat-card>
 
-        <mat-card class="stat-card">
-          <div class="stat-info">
-            <span class="stat-value aulas-hoje-color">{{ aulasHoje }}</span>
-            <span class="stat-label">Aulas Hoje</span>
+        <mat-card class="stat-card1">
+          <div class="stat-info1">
+            <span class="stat-value1 aulas-hoje-color1">{{ aulasHoje1 }}</span>
+            <span class="stat-label1">Aulas Hoje</span>
           </div>
-          <div class="stat-icon-wrapper aulas-hoje-bg">
-            <mat-icon class="stat-icon">today</mat-icon>
+          <div class="stat-icon-wrapper1 aulas-hoje-bg1">
+            <mat-icon class="stat-icon1">today</mat-icon>
           </div>
         </mat-card>
 
-        <a href="https://link-externo-para-materiais.com" target="_blank" rel="noopener noreferrer" class="stat-card-link">
-          <mat-card class="stat-card">
-            <div class="stat-info">
-              <span class="stat-label">Materiais</span>
-              <span class="stat-value">&nbsp;</span> </div>
-            <div class="stat-icon-wrapper materiais-bg">
-              <mat-icon class="stat-icon">folder_open</mat-icon>
+        <a href="https://link-externo-para-materiais.com" target="_blank" rel="noopener noreferrer" class="stat-card-link1">
+          <mat-card class="stat-card1">
+            <div class="stat-info1">
+              <span class="stat-label1">Materiais</span>
+              <span class="stat-value1">&nbsp;</span>
+            </div>
+            <div class="stat-icon-wrapper1 materiais-bg1">
+              <mat-icon class="stat-icon1">folder_open</mat-icon>
             </div>
           </mat-card>
         </a>
-    </div>
+      </div>
 
-    <div class="main-sections">
-      <mat-card class="list-card">
-        <mat-card-header>
-          <mat-card-title><mat-icon>watch_later</mat-icon> Próximas Aulas</mat-card-title>
-          <mat-card-subtitle>Suas aulas agendadas para hoje e amanhã</mat-card-subtitle>
-        </mat-card-header>
-        <mat-card-content>
-          <mat-list *ngIf="proximasAulas && proximasAulas.length > 0">
-            <div *ngFor="let aula of proximasAulas; last as isLast">
-              <mat-list-item>
-                <div class="list-item-content">
-                  <span class="item-title">{{ aula.nome }}</span>
-                  <span class="item-subtitle">{{ aula.materia }}</span>
-                  <span class="item-detail">{{ aula.horario }}</span>
-                </div>
-                <button mat-flat-button color="primary">Entrar</button>
-              </mat-list-item>
-              <mat-divider *ngIf="!isLast"></mat-divider>
+      <div class="main-sections1">
+        <mat-card class="list-card1">
+          <mat-card-header>
+            <mat-card-title><mat-icon>watch_later</mat-icon> Próximas Aulas</mat-card-title>
+            <mat-card-subtitle>Suas aulas agendadas para hoje e amanhã</mat-card-subtitle>
+          </mat-card-header>
+          <mat-card-content>
+            <mat-list *ngIf="proximasAulas1 && proximasAulas1.length > 0">
+              <div *ngFor="let aula of proximasAulas1; last as isLast">
+                <mat-list-item>
+                  <div class="list-item-content1">
+                    <span class="item-title1">{{ aula.nome }}</span>
+                    <span class="item-subtitle1">{{ aula.materia }}</span>
+                    <span class="item-detail1">{{ aula.horario }}</span>
+                  </div>
+                  <button mat-flat-button color="primary">Entrar</button>
+                </mat-list-item>
+                <mat-divider *ngIf="!isLast" class="dividerProfessor"></mat-divider>
+              </div>
+            </mat-list>
+            <div *ngIf="!proximasAulas1 || proximasAulas1.length === 0" class="empty-state1">
+              <mat-icon>event_available</mat-icon>
+              <span>Nenhuma aula agendada por enquanto.</span>
             </div>
-          </mat-list>
-          <div *ngIf="!proximasAulas || proximasAulas.length === 0" class="empty-state">
-            <mat-icon>event_avaible</mat-icon>
-            <span>Nenhuma aula agendada por enquanto.</span>
+          </mat-card-content>
+        </mat-card>
+        
+        <mat-card class="list-card1">
+          <mat-card-header>
+            <mat-card-title><mat-icon>people</mat-icon> Meus Alunos</mat-card-title>
+            <mat-card-subtitle>Lista de todos os seus alunos</mat-card-subtitle>
+          </mat-card-header>
+          <mat-card-content>
+            <mat-list>
+              <div *ngFor="let aluno of meusAlunos; last as isLast">
+                <mat-list-item>
+                  <div class="list-item-content1">
+                    <span class="item-title1">{{ aluno.nome }}</span>
+                    <span class="item-subtitle1">{{ aluno.email }}</span>
+                  </div>
+                  <button mat-stroked-button class="view-button1"><mat-icon>visibility</mat-icon> Ver</button>
+                </mat-list-item>
+                <mat-divider *ngIf="!isLast"></mat-divider>
+              </div>
+            </mat-list>
+          </mat-card-content>
+        </mat-card>
+      </div>
+
+      <mat-card class="materials-card1">
+        <mat-card-header>
+          <mat-card-title>
+            <mat-icon>menu_book</mat-icon>Materiais de Aula
+          </mat-card-title>
+          <mat-card-subtitle>Seus recursos e conteúdos para as aulas</mat-card-subtitle>
+          <span class="header-spacer1"></span>
+          <button [ngStyle]="{'font-size': '14px' , 'transform': 'translateX(-25%)', 'display': 'inline-block'}" mat-flat-button color="primary"><mat-icon>add</mat-icon> Adicionar</button>
+        </mat-card-header>
+        <mat-card-content class="materials-content1">
+          <div *ngFor="let material of materiaisDeAula1" class="material-item1">
+            <mat-icon class="material-icon1">{{ material.icone }}</mat-icon>
+            <div class="material-info1">
+              <span class="item-title1">{{ material.nome }}</span>
+              <span class="item-subtitle1">{{ material.tipo }}</span>
+            </div>
           </div>
         </mat-card-content>
       </mat-card>
-      
-      <mat-card class="list-card">
-        <mat-card-header>
-          <mat-card-title><mat-icon>people</mat-icon> Meus Alunos</mat-card-title>
-          <mat-card-subtitle>Lista de todos os seus alunos</mat-card-subtitle>
-        </mat-card-header>
-        <mat-card-content>
-          <mat-list>
-            <div *ngFor="let aluno of meusAlunos; last as isLast">
-              <mat-list-item>
-                <div class="list-item-content">
-                  <span class="item-title">{{ aluno.nome }}</span>
-                  <span class="item-subtitle">{{ aluno.email }}</span>
-                </div>
-                <button mat-stroked-button class="view-button"><mat-icon>visibility</mat-icon> Ver</button>
-              </mat-list-item>
-              <mat-divider *ngIf="!isLast"></mat-divider>
-            </div>
-          </mat-list>
-        </mat-card-content>
-      </mat-card>
     </div>
-
-    <mat-card class="materials-card">
-      <mat-card-header>
-        <mat-card-title>
-          <mat-icon>menu_book</mat-icon>Materiais de Aula
-        </mat-card-title>
-        <mat-card-subtitle>Seus recursos e conteúdos para as aulas</mat-card-subtitle>
-        <span class="header-spacer"></span>
-        <button mat-flat-button color="primary"><mat-icon>add</mat-icon> Adicionar</button>
-      </mat-card-header>
-      <mat-card-content class="materials-content">
-        <div *ngFor="let material of materiaisDeAula" class="material-item">
-          <mat-icon class="material-icon">{{ material.icone }}</mat-icon>
-          <div class="material-info">
-            <span class="item-title">{{ material.nome }}</span>
-            <span class="item-subtitle">{{ material.tipo }}</span>
-          </div>
-        </div>
-      </mat-card-content>
-    </mat-card>
   </div>
-</div>
 
   <!-- Dashboard do Aluno -->
   <div *ngIf="currentUser?.role === 'Aluno'" class="student-dashboard">
-    <mat-card class="welcome-card student-card">
-      <mat-card-header>
-        <mat-card-title>
-          <mat-icon>person</mat-icon>
-          Dashboard do Aluno
-        </mat-card-title>
-        <mat-card-subtitle>Acesse suas aulas e materiais</mat-card-subtitle>
-      </mat-card-header>
+    <div class="header-container">
+      <div class="logo-section">
+        <img src="https://horizons-cdn.hostinger.com/423dd325-19b9-498f-b316-8ed9e10ea3c7/19fe4aab5350bff3f8d9f0fb6152001a.png" alt="Logo" class="toolbar-logo">
+        <div class="title-group">
+          <span class="main-title">Meu Painel</span>
+          <span class="sub-title">Bem-vindo, {{ currentUser?.fullName }}</span>
+        </div>
+      </div>
+      <button mat-stroked-button (click)="logout()">
+        <mat-icon>exit_to_app</mat-icon>
+        Sair
+      </button>
+    </div>
 
-      <mat-card-content>
-        <div class="user-info" *ngIf="currentUser">
-          <p><strong>Aluno:</strong> {{ currentUser.fullName }}</p>
-          <p><strong>Email:</strong> {{ currentUser.email }}</p>
-        </div>
-        
-        <div class="quick-actions">
-          <h3>Ações Rápidas</h3>
-          <div class="action-buttons">
-            <button mat-raised-button color="primary" (click)="joinLiveClass()">
-              <mat-icon>videocam</mat-icon>
-              Entrar na Aula
-            </button>
-            <button mat-raised-button color="accent" (click)="uploadAssignment()">
-              <mat-icon>upload</mat-icon>
-              Enviar Tarefa
-            </button>
-            <button mat-raised-button color="warn" (click)="logout()">
-              <mat-icon>logout</mat-icon>
-              Sair
-            </button>
+    <div class="dashboard-content student-layout">
+      <!-- Próxima Aula - OCUPA 2 COLUNAS -->
+      <mat-card class="next-class-card">
+        <mat-card-header>
+          <mat-card-title>
+            <mat-icon [ngStyle]="{'color': calendar_today_color}">calendar_today</mat-icon>
+            <span [ngStyle]="{'font-size': '22px', 'font-weight': 'bold', 'transform': 'translateX(10px) translateY(-2px)', 'display': 'inline-block'}">Próxima Aula</span>
+          </mat-card-title>
+          <mat-card-subtitle>
+            <span [ngStyle]="{'font-size': '14px' , 'transform': 'translateY(7px)', 'display': 'inline-block'}">Informações sobre sua próxima aula agendada</span>
+          </mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="class-info" *ngIf="proximaAula">
+            <h3 class="class-title">{{ proximaAula.nome }}</h3>
+            <div class="sala-de-aula-div">
+              <div class="class-details">
+                <div class="detail-item">
+                  <span>Professor: {{ proximaAula.professor }}</span>
+                </div>
+                <div class="detail-item-blue">
+                  <mat-icon>schedule</mat-icon>
+                  <span>{{ proximaAula.data }} às {{ proximaAula.horario }}</span>
+                </div>
+              </div>
+              
+              <div class="buttons-proxima-aula">
+                <div class="sala-indisponivel-button">
+                  <mat-icon [ngStyle]="{'transform': 'translateX(-6px)'}">videocam</mat-icon>
+                  <span [ngStyle]="{'font-size': '14px' , 'transform': 'translateY(-6px)', 'display': 'inline-block'}">Sala Indisponível</span>
+                </div>
+                <div class="remarcar-button">
+                  <mat-icon [ngStyle]="{'transform': 'translateX(-6px)'}">cached</mat-icon>
+                  <span [ngStyle]="{'font-size': '14px' , 'transform': 'translateY(-6px)', 'display': 'inline-block'}">Remarcar Aula</span>
+                </div>
+              </div>
+            </div>
+            
+            <div class="class-instructions">
+              <mat-icon [ngStyle]="{'color': orange_color}">info_outline</mat-icon>
+              <span [ngStyle]="{'font-size': '16px', 'transform': 'translateX(8px) translateY(-6px)', 'display': 'inline-block'}">Status da Sala:</span>
+              <p>A sala ficará disponível 10 minutos antes da aula.</p>
+            </div>
           </div>
-        </div>
-      </mat-card-content>
-    </mat-card>
-  </div>
+          <div *ngIf="!proximaAula" class="empty-state">
+            <mat-icon>event_busy</mat-icon>
+            <span>Nenhuma aula agendada</span>
+          </div>
+        </mat-card-content>
+      </mat-card>
+
+      <!-- Homework - COLUNA ESQUERDA -->
+      <mat-card class="homework-card">
+        <mat-card-header>
+          <mat-card-title>
+            <mat-icon [ngStyle]="{'color': orange_color}">import_contacts</mat-icon>
+            <span [ngStyle]="{'font-size': '22px', 'font-weight': 'bold', 'transform': 'translateX(10px) translateY(-2px)', 'display': 'inline-block'}">Homework</span>
+          </mat-card-title>
+          <mat-card-subtitle>
+            <span [ngStyle]="{'font-size': '14px'}">Atividades pós-aula disponíveis</span>
+          </mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="homework-item" *ngIf="homeworkPendente">
+            <div class="homework-info">
+              <mat-icon class="homework-icon">task_alt</mat-icon>
+              <div class="homework-details">
+                <span class="homework-title">Homework Disponível</span>
+                <span class="homework-subtitle">Você tem atividades para completar!</span>
+              </div>
+            </div>
+            <button mat-flat-button color="primary" class="homework-button">Fazer Homework</button>
+          </div>
+          <div *ngIf="!homeworkPendente" class="empty-state">
+            <mat-icon>assignment_turned_in</mat-icon>
+            <span>Nenhum homework pendente</span>
+          </div>
+        </mat-card-content>
+      </mat-card>
+
+      <!-- Histórico - COLUNA DIREITA -->
+      <mat-card class="history-card">
+        <mat-card-header>
+          <mat-card-title>
+            <mat-icon [ngStyle]="{'color': calendar_today_color}">schedule</mat-icon>
+            <span [ngStyle]="{'font-size': '22px', 'font-weight': 'bold', 'transform': 'translateY(-2px)', 'display': 'inline-block'}">Histórico de Aulas</span>
+          </mat-card-title>
+          <mat-card-subtitle>Suas aulas anteriores</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <mat-list>
+            <div *ngFor="let aula of historicoAulas" class="history-item" [ngClass]="{'bg-concluida': aula.homeworkStatus === 'Concluído', 'bg-pendente': aula.homeworkStatus === 'Pendente'}">
+              <mat-list-item>
+                <div class="history-content">
+                  <div class="history-main">
+                    <span class="class-name">
+                      Aula Concluída
+                    </span>
+                  </div>
+                  <div class="history-status">
+                    <span class="status-badge aula-concluida"  
+                          [class.text-concluida]="aula.homeworkStatus === 'Concluído'"
+                          [class.text-pendente]="aula.homeworkStatus === 'Pendente'">{{aula.nome}} - {{ aula.data }}</span>
+                    <span class="status-badge" 
+                          [class.homework-concluida]="aula.homeworkStatus === 'Concluído'"
+                          [class.homework-pendente]="aula.homeworkStatus === 'Pendente'">
+                      Homework: {{ aula.homeworkStatus }}
+                    </span>
+                  </div>
+                </div>
+              </mat-list-item>
+            </div>
+          </mat-list>
+          <div *ngIf="historicoAulas.length === 0" class="empty-state">
+            <mat-icon>history_toggle_off</mat-icon>
+            <span>Nenhuma aula no histórico</span>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  <!-- </div> -->
 </div>

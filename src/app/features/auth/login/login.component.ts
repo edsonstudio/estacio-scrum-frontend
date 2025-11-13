@@ -8,8 +8,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { MatSelectModule } from '@angular/material/select'; // 👈 ADICIONE ESTA LINHA
-import { AuthService, LoginCredentials } from '../../../core/auth.service';
+import { MatSelectModule } from '@angular/material/select';
 
 @Component({
   selector: 'app-login',
@@ -24,7 +23,7 @@ import { AuthService, LoginCredentials } from '../../../core/auth.service';
     MatButtonModule,
     MatIconModule,
     MatProgressSpinnerModule,
-    MatSelectModule // 👈 E ESTA LINHA NO ARRAY
+    MatSelectModule
   ],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
@@ -37,7 +36,6 @@ export class LoginComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private authService: AuthService,
     private router: Router
   ) {}
 
@@ -47,47 +45,57 @@ export class LoginComponent implements OnInit {
 
   private initializeForm(): void {
     this.loginForm = this.fb.group({
-      role: ['', Validators.required], // agora vem primeiro
+      role: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]]
     });
   }
 
+  // 👇 MOCK LOGIN (sem backend)
   onSubmit(): void {
     if (this.loginForm.valid) {
       this.isLoading = true;
       this.errorMessage = '';
 
-      const credentials: LoginCredentials = {
-        email: this.loginForm.value.email,
-        password: this.loginForm.value.password
-      };
+      const { email, password, role } = this.loginForm.value;
 
-      this.authService.login(credentials).subscribe({
-        next: (response) => {
-          console.log('Login realizado com sucesso:', response);
+      const normalizedRole = role?.toLowerCase();
+      const normalizedEmail = email?.toLowerCase();
+      const normalizedPassword = password?.trim();
+
+      // Mock flexível (aceita variações)
+      const isProfessor =
+        normalizedRole === 'professor' &&
+        normalizedEmail === 'professor@teste.com' &&
+        normalizedPassword === '123456';
+
+      const isAluno =
+        normalizedRole === 'aluno' &&
+        normalizedEmail === 'aluno@teste.com' &&
+        normalizedPassword === '123456';
+
+      if (isProfessor || isAluno) {
+        const mockUser = {
+          fullName: isProfessor ? 'Professor João' : 'Aluno Pedro José',
+          role: isProfessor ? 'Professor' : 'Aluno',
+          email
+        };
+        localStorage.setItem('currentUser', JSON.stringify(mockUser));
+
+        setTimeout(() => {
           this.isLoading = false;
           this.router.navigate(['/dashboard']);
-        },
-        error: (error) => {
-          console.error('Erro no login:', error);
-          this.isLoading = false;
-          
-          if (error.status === 401) {
-            this.errorMessage = 'Email ou senha incorretos';
-          } else if (error.status === 0) {
-            this.errorMessage = 'Erro de conexão. Verifique sua internet.';
-          } else if (error.error?.message) {
-            this.errorMessage = error.error.message;
-          } else {
-            this.errorMessage = 'Erro inesperado. Tente novamente.';
-          }
-        }
-      });
+        }, 800);
+      } else {
+        this.isLoading = false;
+        this.errorMessage =
+          'Credenciais inválidas.';
+      }
     } else {
       this.markFormGroupTouched();
     }
   }
+
 
   private markFormGroupTouched(): void {
     Object.keys(this.loginForm.controls).forEach(key => {
