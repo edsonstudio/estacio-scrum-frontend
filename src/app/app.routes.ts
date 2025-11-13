@@ -6,13 +6,14 @@ import { professorGuard } from './core/guards/role.guard';
 import { studentGuard } from './core/guards/role.guard';
 
 export const routes: Routes = [
+  // { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   { 
     path: 'dashboard', 
     loadComponent: () => import('./features/dashboard/dashboard.component').then(m => m.DashboardComponent),
-    canActivate: [authGuard]
+    //canActivate: [authGuard] // Comment to cancel auth
   },
   { 
     path: 'live-class', 

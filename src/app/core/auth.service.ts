@@ -151,8 +151,10 @@ export class AuthService {
   }
 
   getCurrentUser(): User | null {
-    return this.currentUser();
+    const storedUser = localStorage.getItem('currentUser'); //Armazenando no localStorage para mockar o login.
+    return storedUser ? JSON.parse(storedUser) : null;
   }
+
 
   hasRole(role: 'Aluno' | 'Professor'): boolean {
     const user = this.getCurrentUser();
